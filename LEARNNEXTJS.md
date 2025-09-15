@@ -1,4 +1,4 @@
-# 📘 Next.js App Router – Special File & Folder Conventions
+# 📘 Next.js App Router – Thư mục đặ biệt và quy ước
 
 Trong **Next.js App Router**, có một số **quy ước đặc biệt** về file và thư mục giúp framework hiểu cách routing, layout, và xử lý UI.
 
@@ -78,3 +78,16 @@ app/docs/[[...slug]]/page.tsx
 ---
 
 🔗 Tham khảo: [Next.js Documentation](https://nextjs.org/docs/app/building-your-application/routing)
+
+# 📊 So sánh React Client Component vs Next.js Server Component
+| Đặc điểm | **Client Component (React)** | **Server Component (Next.js)** |
+|----------|------------------------------|--------------------------------|
+| **Chạy ở đâu** | Trình duyệt (browser, client-side) | Server (Node.js, Edge runtime) |
+| **Ngôn ngữ** | JavaScript/TypeScript chạy trên client | JavaScript/TypeScript nhưng thực thi ở server |
+| **Khả năng truy cập API** | Chỉ gọi được API qua `fetch` từ browser | Có thể truy cập **DB, API key, env server-side** trực tiếp |
+| **SEO** | Không tốt bằng (render ở client → Google phải chờ) | Rất tốt (SSR/SSG trả HTML sẵn cho Google) |
+| **Hiệu năng** | Tải JS nhiều hơn, có thể chậm nếu app phức tạp | Nhẹ hơn (ít JS gửi xuống client) |
+| **Trạng thái (state)** | Có `useState`, `useEffect`, event handlers (onClick, onChange…) | ❌ Không có state, hook client, hay event handler |
+| **Khi nào render lại** | Mỗi lần state/props thay đổi → re-render trên client | Chỉ render lại khi server re-fetch data |
+| **Khi nào nên dùng** | - Form, input, button có sự kiện <br> - Animation, interactivity <br> - State cục bộ (`useState`, `useEffect`) | - Fetch data từ DB/API <br> - Render HTML tĩnh/ít thay đổi <br> - Chia sẻ layout chung <br> - SEO nội dung tĩnh |
+| **Ví dụ** | `onClick` mở modal, `useState` quản lý form | Trang blog, danh sách sản phẩm lấy từ DB |
