@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import SearchItem from "@/components/ui/SearchItem";
-import PaginateItem from "@/components/ui/common/PaginateItem";
+import PaginateItem from "@/components/ui/PaginateItem";
 import Image from "next/image";
+import Link from "next/link";
 
 type News = { userId: number; id: number; title: string; body: string };
 
@@ -46,7 +47,7 @@ export default function NewsList() {
 			<div className="flex-1 overflow-y-auto mt-6">
 				<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 					{paginated.map((p) => (
-						<a key={p.id} href={`/news/${p.id}`} className="bg-white border rounded-lg shadow-sm hover:shadow-md transition flex flex-col overflow-hidden">
+						<Link key={p.id} href={`/news/${p.id}`} className="bg-white border rounded-lg shadow-sm hover:shadow-md transition flex flex-col overflow-hidden">
 							<div className="relative w-full h-40">
 								<Image src="/image.svg" alt={p.title} fill className="object-cover" />
 							</div>
@@ -55,15 +56,12 @@ export default function NewsList() {
 								<h5 className="mt-1 font-semibold text-gray-900 line-clamp-2">{p.title}</h5>
 								<p className="mt-2 text-sm text-gray-600 line-clamp-3 flex-1">{p.body}</p>
 							</div>
-							<div className="px-4 py-2 border-t bg-gray-50 text-right">
-								<span className="text-xs text-blue-600">Xem chi tiết</span>
-							</div>
-						</a>
+						</Link>
 					))}
 				</div>
 			</div>
 
-			<div className="sticky bottom-10">
+			<div className="flex items-center justify-center mt-6">
 				<PaginateItem page={page} totalPages={totalPages} onPageChange={setPage} />
 			</div>
 		</div>

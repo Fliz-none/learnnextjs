@@ -28,7 +28,7 @@ export default function Header() {
 							{item.label}
 						</NavLink>
 					))}
-					<NavLink href="/auth/login">
+					<NavLink href="/login">
 						<Image src="/favicon.ico" alt="Login" width={18} height={18} className="inline-block mr-1" />
 						Login
 					</NavLink>
@@ -46,7 +46,7 @@ export default function Header() {
 								{item.label}
 							</NavLink>
 						))}
-						<NavLink href="/auth/login">
+						<NavLink href="/login">
 							<Image src="/favicon.ico" alt="Login" width={18} height={18} className="inline-block mr-1" />
 							Login
 						</NavLink>

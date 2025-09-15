@@ -13,15 +13,12 @@ export async function loginApi(email: string, password: string) {
 	throw new Error("Sai email hoặc mật khẩu");
 }
 
-export async function registerApi(email: string, password: string) {
+export async function registerApi(email: string, password: string, user_name: string) {
 	const userExists = fakeUsers.some((u) => u.email === email);
-
+  console.log(fakeUsers);
 	if (userExists) {
 		throw new Error("Email đã tồn tại");
 	}
 
-	// Thêm user vào fake db
-	fakeUsers.push({ id: Date.now(), email, password, user_name: email.split("@")[0] });
-
-	return { token: "fake-jwt-token-456", user: { id: 2, email, user_name: email.split("@")[0] } };
+	return { token: "fake-jwt-token-456", user: { id: 2, email, user_name: user_name } };
 }
