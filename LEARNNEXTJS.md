@@ -1,56 +1,80 @@
-# I. Special File & Folder Conventions (Quy ước đặc biệt cho file và thư mục trong App Router)
+# 📘 Next.js App Router – Special File & Folder Conventions
 
-1. Route Group → `(folder)`: Dùng dấu ngoặc () để nhóm route mà không ảnh hưởng URL.
+Trong **Next.js App Router**, có một số **quy ước đặc biệt** về file và thư mục giúp framework hiểu cách routing, layout, và xử lý UI.
 
-   - Ví dụ: app/(auth)/login/page.tsx → URL /login, không thêm /auth.
+---
 
-2. Dynamic Routes → `[param]`: Dùng dấu ngoặc vuông [] để tạo param động.
+## I. 🗂 Special Folders (Thư mục đặc biệt)
 
-   - Ví dụ: app/news/[id]/page.tsx → /news/1, /news/abc - Lấy giá trị qua params.id.
+### 1. **Route Group** → `(folder)`
 
-3. Catch-all Routes → [...param]: Gom toàn bộ phần còn lại của URL.
+Dùng dấu ngoặc `()` để nhóm route mà **không ảnh hưởng URL**.
 
-   - Ví dụ: app/docs/[...slug]/page.tsx → /docs/a/b/c → params.slug = ["a","b","c"].
+```bash
+app/(auth)/login/page.tsx  →  /login   (không phải /auth/login)
+```
 
-4. Optional Catch-all Routes → [[...param]]
+---
 
-   - Giống [...param] nhưng có thể không có param.
+### 2. **Dynamic Routes** → `[param]`
 
-   - Ví dụ: app/docs/[[...slug]]/page.tsx
-     → /docs (params.slug = undefined)
-     → /docs/a/b (params.slug = ["a","b"]).
+Dùng dấu ngoặc vuông `[]` để tạo **param động**.
 
-5. Layout → layout.tsx
+```bash
+app/news/[id]/page.tsx
+# /news/1
+# /news/abc   → params.id
+```
 
-   - File layout.tsx định nghĩa UI bao quanh các page con.
-   - Ví dụ: header/footer chung.
+---
 
-6. Template → template.tsx
+### 3. **Catch-all Routes** → `[...param]`
 
-   - Giống layout nhưng mỗi lần chuyển page sẽ remount lại.
-   - Dùng khi cần reset state (vd: wizard form).
+Gom toàn bộ phần còn lại của URL.
 
-7. Loading UI → loading.tsx
+```bash
+app/docs/[...slug]/page.tsx
+# /docs/a/b/c   → params.slug = ["a","b","c"]
+```
 
-   - Hiển thị UI loading khi page/layout đang fetch dữ liệu.
-   - Next.js sẽ tự render khi có suspense.
+---
 
-8. Error UI → error.tsx
+### 4. **Optional Catch-all Routes** → `[[...param]]`
 
-   - Bắt lỗi trong page/layout.
-   - Có thể dùng reset() để retry.
+Giống `[...param]` nhưng **có thể không có param**.
 
-9. Not Found UI → not-found.tsx
+```bash
+app/docs/[[...slug]]/page.tsx
+# /docs          → params.slug = undefined
+# /docs/a/b      → params.slug = ["a","b"]
+```
 
-   - Render khi page không tồn tại (notFound() được gọi).
+---
 
-10. Default Route → default.tsx
+## II. 📄 Special Files (File đặc biệt)
 
-    - Trong Parallel Routes (song song), định nghĩa nội dung mặc định khi slot chưa được chọn.
+| File              | Chức năng                                                             | Ví dụ           |
+| ----------------- | --------------------------------------------------------------------- | --------------- |
+| **layout.tsx**    | Định nghĩa UI bao quanh các page con (header/footer chung).           | Shared layout   |
+| **template.tsx**  | Giống layout nhưng **remount lại** mỗi lần chuyển page (reset state). | Wizard form     |
+| **loading.tsx**   | Hiển thị khi page/layout đang **fetch dữ liệu** (Suspense).           | Loading spinner |
+| **error.tsx**     | Bắt lỗi trong page/layout, có thể gọi `reset()` để retry.             | Error boundary  |
+| **not-found.tsx** | Render khi gọi `notFound()` hoặc URL không tồn tại.                   | 404 page        |
+| **default.tsx**   | Trong **Parallel Routes**, định nghĩa nội dung mặc định cho slot.     | Default view    |
+| **actions.ts**    | (Next.js 14+) Định nghĩa **Server Actions** (function chạy ở server). | Form submit     |
+| **middleware.ts** | Chạy trước khi request tới route (auth, logging, redirect…).          | Auth check      |
 
-11. Server Actions → actions.ts
+---
 
-    - (Next.js 14+) file tách riêng function chạy ở server, gọi từ client.
+## ✅ Tóm tắt
 
-12. Middleware → middleware.ts
-    - Chạy trước khi request tới route (auth, logging, redirect...).
+- `(folder)` → Route Group (tổ chức code, không ảnh hưởng URL).
+- `[param]`, `[...param]`, `[[...param]]` → Dynamic Routing.
+- `layout.tsx`, `template.tsx` → Bao quanh UI.
+- `loading.tsx`, `error.tsx`, `not-found.tsx` → Xử lý trạng thái UI.
+- `default.tsx` → Default cho Parallel Routes.
+- `actions.ts`, `middleware.ts` → Logic phía server.
+
+---
+
+🔗 Tham khảo: [Next.js Documentation](https://nextjs.org/docs/app/building-your-application/routing)
