@@ -13,8 +13,8 @@ async function getPost(id: string): Promise<Post> {
 }
 
 export default async function PostPage({ params }: { params: { id?: string } }) {
-	const { id } = await params;
-	const [post] = await Promise.all([getPost(id ? id : "1")]);
+	const { id } = params;
+	const post = await getPost(id ?? "1");
 
 	return (
 		<Container className="py-10">
