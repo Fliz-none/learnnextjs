@@ -3,7 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 
 type Post = { id: number; userId: number; title: string; body: string; imageUrl?: string; createdAt: string };
-
+type PostPageProps = {
+	params: {
+		id: string;
+	};
+};
 async function getPost(id: string): Promise<Post> {
 	const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
 		cache: "no-store",
@@ -12,9 +16,9 @@ async function getPost(id: string): Promise<Post> {
 	return res.json();
 }
 
-export default async function PostPage({ params }: { params: { id: string } }) {
+export default async function PostPage({ params }: PostPageProps) {
 	const { id } = params;
-  const post = await getPost(id);
+	const post = await getPost(id);
 
 	return (
 		<Container className="py-10">
