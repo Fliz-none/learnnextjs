@@ -12,9 +12,9 @@ async function getPost(id: string): Promise<Post> {
 	return res.json();
 }
 
-export default async function PostPage({ params }: { params: { id?: string } }) {
+export default async function PostPage({ params }: { params: { id: string } }) {
 	const { id } = params;
-	const post = await getPost(id ?? "1");
+  const post = await getPost(id);
 
 	return (
 		<Container className="py-10">
