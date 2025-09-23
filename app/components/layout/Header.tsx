@@ -4,7 +4,6 @@ import Logo from "@/components/ui/Logo";
 import NavLink from "@/components/layout/NavLink";
 import Container from "@/components/ui/Container";
 import { useState } from "react";
-import Button from "../ui/Button";
 import Image from "next/image";
 
 const NAV = [
