@@ -25,6 +25,13 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Test print today
+  print-today:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print today
+        run: echo "Today is $(date)"
+        
   # Build job
   build:
     runs-on: ubuntu-latest
