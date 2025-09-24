@@ -1,17 +1,17 @@
 import Container from "@/components/ui/Container";
 import Link from "next/link";
 import Image from "next/image";
+import { JSX } from "react";
 
 type Post = { id: number; userId: number; title: string; body: string; imageUrl?: string; createdAt: string };
 async function getPost(id: string): Promise<Post> {
 	const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
 		cache: "no-store",
 	});
-	if (!res.ok) throw new Error("Failed to fetch post");
 	return res.json();
 }
 
-export default async function PostPage({ params }: { params: { id: string } }) {
+export default async function PostPage({ params }: { params: { id: string } }): Promise<JSX.Element>  {
 	const post = await getPost(params.id);
 
 	return (
