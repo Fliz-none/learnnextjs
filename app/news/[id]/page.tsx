@@ -6,7 +6,7 @@ type Post = { id: number; userId: number; title: string; body: string; imageUrl?
 
 async function getPost(id: string): Promise<Post> {
 	const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
-		cache: "no-store",
+		next: { revalidate: 60 }, // 60s refresh 1 lần
 	});
 	if (!res.ok) throw new Error("Failed to fetch post");
 	return res.json();
@@ -15,7 +15,7 @@ async function getPost(id: string): Promise<Post> {
 // Function to fetch all posts for generateStaticParams
 async function getAllPostIds(): Promise<{ id: string }[]> {
 	const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
-		cache: "no-store",
+		next: { revalidate: 3600 }, // 60s refresh 1 lần
 	});
 	if (!res.ok) throw new Error("Failed to fetch posts");
 	const posts: Post[] = await res.json();
