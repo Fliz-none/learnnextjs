@@ -3,34 +3,21 @@ import Link from "next/link";
 import Image from "next/image";
 
 type Post = { id: number; userId: number; title: string; body: string; imageUrl?: string; createdAt: string };
-
+type PageProps = {
+	params: {
+		id: string;
+	};
+};
 async function getPost(id: string): Promise<Post> {
 	const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
-		next: { revalidate: 60 }, // 60s refresh 1 lần
+		cache: "no-store",
 	});
 	if (!res.ok) throw new Error("Failed to fetch post");
 	return res.json();
 }
 
-// Function to fetch all posts for generateStaticParams
-async function getAllPostIds(): Promise<{ id: string }[]> {
-	const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
-		next: { revalidate: 3600 }, // 60s refresh 1 lần
-	});
-	if (!res.ok) throw new Error("Failed to fetch posts");
-	const posts: Post[] = await res.json();
-	return posts.map((post) => ({ id: post.id.toString() }));
-}
-
-// generateStaticParams function
-export async function generateStaticParams() {
-	const postIds = await getAllPostIds();
-	return postIds;
-}
-
-export default async function PostPage({ params }: { params: Promise<{ id: string }> }) {
-	const { id } = await params;
-	const post = await getPost(id);
+export default async function PostPage({ params }: PageProps) {
+	const post = await getPost(params.id);
 
 	return (
 		<Container className="py-10">

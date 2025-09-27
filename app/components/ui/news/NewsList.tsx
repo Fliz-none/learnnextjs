@@ -17,7 +17,7 @@ export default function NewsList() {
 	useEffect(() => {
 		const getNews = async () => {
 			const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
-				next: { revalidate: 60 }, // 60s refresh 1 lần
+				cache: "no-store",
 			});
 			const data: News[] = await res.json();
 			setNews(data);
