@@ -4,8 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { loginApi } from "@/lib/api";
 import Link from "next/link";
-import AuthForm from "@/components/ui/AuthForm";
-import Input from "@/components/ui/Input";
 
 export default function LoginPage() {
 	const router = useRouter();
@@ -18,6 +16,7 @@ export default function LoginPage() {
 		e.preventDefault();
 		setError(null);
 		setLoading(true);
+
 		try {
 			const data = await loginApi(email, password);
 			localStorage.setItem("token", data.token);
@@ -34,22 +33,35 @@ export default function LoginPage() {
 	};
 
 	return (
-		<AuthForm
-			title="Login"
-			onSubmit={handleSubmit}
-			loading={loading}
-			error={error}
-			footer={
-				<>
-					Do not have an account?{" "}
-					<Link href="/register" className="text-blue-600 hover:text-blue-800 underline">
-						Register
-					</Link>
-				</>
-			}
-		>
-			<Input label="Email" type="email" value={email} onChange={setEmail} placeholder="Enter your email" />
-			<Input label="Password" type="password" value={password} onChange={setPassword} placeholder="Enter your password" />
-		</AuthForm>
+		<div className="card shadow-sm px-4 py-5 w-100" style={{ maxWidth: "440px" }}>
+			<h3 className="mb-0 fw-semibold text-center">Welcome Back</h3>
+			<span className="text-center text-secondary">Sign in to continue to your account.</span>
+			<div className="my-3">
+				<form onSubmit={handleSubmit}>
+					<div className="mb-3 form-group">
+						<label className="form-label">Email</label>
+						<input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@example.com" required />
+					</div>
+
+					<div className="mb-3 form-group">
+						<label className="form-label">Password</label>
+						<input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required />
+					</div>
+
+					{error && <p className="text-danger small">{error}</p>}
+
+					<Link href="/forgot-password" className="text-decoration-none d-block my-3">Forgot your password?</Link>
+					<button type="submit" className="btn btn-primary w-100" disabled={loading}>
+						{loading ? "Loading..." : "Log in"}
+					</button>
+				</form>
+			</div>
+			<p className="text-center mt-3 mb-0">
+				Do not have an account?{" "}
+				<Link href="/register" className="text-decoration-none">
+					Sign up
+				</Link>
+			</p>
+		</div>
 	);
 }

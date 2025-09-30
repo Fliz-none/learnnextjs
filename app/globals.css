@@ -1,30 +1,142 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* globals.css */
 
-@import "tailwindcss";
-
-:root {
-	--background: #ffffff;
-	--foreground: #171717;
+/* Reset & base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.bg-semidark {
+  background-color: #111827 !important;
 }
 
-@theme inline {
-	--color-background: var(--background);
-	--color-foreground: var(--foreground);
-	--font-sans: var(--font-geist-sans);
-	--font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background: #0a0a0a;
-		--foreground: #ededed;
-	}
-}
-
+/* Toàn trang nền tối */
 body {
-	background: var(--background);
-	color: var(--foreground);
-	font-family: Arial, Helvetica, sans-serif;
+  background-color: #111827 !important;
+  color: #ffffff !important;
+  font-family: "Inter", sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  color: #1282F2 !important;
+  text-shadow: 0 0 1 #3f7eea !important;
+}
+
+.navbar .nav-link {
+  color: #d1d5db !important;
+}
+
+.navbar .nav-link.active,
+.navbar .nav-link:hover {
+  color: #ffffff !important;
+}
+
+.navbar .nav-link.active {
+  background-color: #1F2937 !important;
+  padding: 0.55rem 1.75rem !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  border-radius: 0.25rem !important;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+/* Card */
+.card {
+  background-color: #1F2937 !important;
+  border: none !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  color: #e5e7eb !important;
+}
+
+/* Input dark style */
+.form-control {
+  background-color: #1E293B !important;
+  border: 1px solid #374151 !important;
+  color: #ffffff !important;
+  border-radius: 0.5rem !important;
+  border: 0 !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 1rem !important;
+}
+
+/* Placeholder */
+.form-control::placeholder {
+  color: #9CA3AF !important;
+  opacity: 1;
+}
+
+/* Khi focus */
+.form-control:focus {
+  background-color: #1E293B !important;
+  border-color: #3B82F6 !important;
+  box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25) !important;
+  color: #ffffff !important;
+}
+
+/* Khi focus thì placeholder mờ hơn */
+.form-control:focus::placeholder {
+  color: #7d7d7d !important;
+}
+
+/* Khi chua focus */
+.form-group .form-control {
+  color: #ffffff !important;
+  background-color: #111827 !important;
+}
+
+.form-group .form-label {
+  margin-bottom: 0.3rem !important;
+}
+
+/* Button */
+.btn-primary {
+  background-color: #137FEC !important;
+  border-color: #137FEC !important;
+}
+
+.btn-primary:hover {
+  background-color: #2563eb !important;
+  border-color: #2563eb !important;
+}
+
+.btn-outline-light {
+  color: #ffffff !important;
+  border-color: #6b7280 !important;
+}
+
+.btn-outline-light:hover {
+  background-color: #374151 !important;
+}
+
+/* Header */
+header {
+  background-color: #111827 !important;
+  border-bottom: 1px solid #343b4e;
+}
+
+/* Footer */
+footer {
+  background-color: #111827 !important;
+  color: #9ca3af !important;
+  border-top: 1px solid #343b4e;
+}
+
+footer a {
+  color: #9ca3af !important;
+}
+
+footer a:hover {
+  color: #ffffff !important;
+}
+
+.search-icon-wrapper {
+  background-color: #1E293B !important;
+  border: none !important;
+  border-radius: 0.5rem 0 0 0.5rem !important;
+  box-shadow: none;
 }

@@ -4,8 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { registerApi } from "@/lib/api";
 import Link from "next/link";
-import AuthForm from "@/components/ui/AuthForm";
-import Input from "@/components/ui/Input";
 
 export default function RegisterPage() {
 	const router = useRouter();
@@ -36,23 +34,39 @@ export default function RegisterPage() {
 	};
 
 	return (
-		<AuthForm
-			title="Register"
-			onSubmit={handleSubmit}
-			loading={loading}
-			error={error}
-			footer={
-				<>
-					Already have an account?{" "}
-					<Link href="/login" className="text-blue-600 hover:text-blue-800 underline">
-						Login
-					</Link>
-				</>
-			}
-		>
-			<Input label="Username" value={username} onChange={setUsername} placeholder="Enter your username" />
-			<Input label="Email" type="email" value={email} onChange={setEmail} placeholder="Enter your email" />
-			<Input label="Password" type="password" value={password} onChange={setPassword} placeholder="Enter your password" />
-		</AuthForm>
+		<div className="card shadow-sm px-4 py-5 w-100" style={{ maxWidth: "440px" }}>
+			<h3 className="mb-0 fw-semibold text-center">Create your account</h3>
+			<span className="text-center text-secondary">Join us and stay updated with the latest tech news.</span>
+			<div className="my-3">
+				<form onSubmit={handleSubmit}>
+					<div className="mb-3 form-group">
+						<label className="form-label">Username</label>
+						<input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter your username" required />
+					</div>
+
+					<div className="mb-3 form-group">
+						<label className="form-label">Email</label>
+						<input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required />
+					</div>
+
+					<div className="mb-3 form-group">
+						<label className="form-label">Password</label>
+						<input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" required />
+					</div>
+
+					{error && <p className="text-danger small">{error}</p>}
+
+					<button type="submit" className="btn btn-primary w-100" disabled={loading}>
+						{loading ? "Loading..." : "Sign Up"}
+					</button>
+				</form>
+			</div>
+			<p className="text-center mt-3 mb-0">
+				Already have an account?{" "}
+				<Link href="/login" className="text-decoration-none">
+					Sign In
+				</Link>
+			</p>
+		</div>
 	);
 }

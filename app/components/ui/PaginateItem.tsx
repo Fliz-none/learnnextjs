@@ -6,11 +6,12 @@ interface PaginateItemProps {
 	page: number;
 	totalPages: number;
 	onPageChange: (page: number) => void;
-	size?: "sm" | "md";
+	size?: "sm" | "md" | "lg";
 }
 
-export default function PaginateItem({ page, totalPages, onPageChange, size = "md" }: PaginateItemProps) {
+export default function PaginateItem({ page, totalPages, onPageChange }: PaginateItemProps) {
 	const [jumpPage, setJumpPage] = useState("");
+
 	const handleJump = (e: React.FormEvent) => {
 		e.preventDefault();
 		const num = parseInt(jumpPage, 10);
@@ -22,11 +23,8 @@ export default function PaginateItem({ page, totalPages, onPageChange, size = "m
 
 	if (totalPages <= 1) return null;
 
-	const sizeClass = size === "sm" ? "text-sm h-8 px-3" : "text-base h-10 px-4";
-
 	const getPages = () => {
 		const pages: (number | "...")[] = [];
-
 		if (totalPages <= 7) {
 			for (let i = 1; i <= totalPages; i++) pages.push(i);
 		} else {
@@ -42,21 +40,14 @@ export default function PaginateItem({ page, totalPages, onPageChange, size = "m
 	};
 
 	const pages = getPages();
-
 	return (
-		<nav aria-label="Page navigation" className="mt-6">
-			<ul className="inline-flex -space-x-px">
+		<div className="mt-3">
+			<ul className="d-flex justify-content-center gap-4 list-unstyled">
 				{/* Prev */}
-				<li>
-					<button
-						onClick={() => onPageChange(Math.max(1, page - 1))}
-						disabled={page === 1}
-						className={`cursor-${page === 1 ? "not-allowed" : "pointer"} flex items-center justify-center ${sizeClass} leading-tight 
-              text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg 
-              hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50`}
-					>
+				<li className={`${page === 1 ? "disabled" : ""}`}>
+					<span className="p-2 text-white" role="button" onClick={() => onPageChange(Math.max(1, page - 1))}>
 						‹
-					</button>
+					</span>
 				</li>
 
 				{/* Page numbers */}
@@ -64,42 +55,29 @@ export default function PaginateItem({ page, totalPages, onPageChange, size = "m
 					p === "..." ? (
 						<li key={`input-${i}`}>
 							<form onSubmit={handleJump}>
-								<input
-									type="text"
-									value={jumpPage}
-									onChange={(e) => setJumpPage(e.target.value)}
-									className={`w-14 text-center border border-gray-300 focus:text-gray-900 ${sizeClass.replace(/px-\d+/, "px-1")} rounded`}
-									placeholder="..."
-								/>
+								<input type="text" value={jumpPage} onChange={(e) => setJumpPage(e.target.value)} className="page-link text-center" style={{ width: "3rem" }} placeholder="..." />
 							</form>
 						</li>
 					) : (
-						<li key={p}>
-							<button
+						<li key={p} className={`${p === page ? "active" : ""}`}>
+							<span
+								className={`d-flex align-items-center justify-content-center rounded-circle ${p === page ? "bg-primary text-white" : "text-white"}`}
+								style={{ width: "2rem", height: "2rem", cursor: "pointer"}}
 								onClick={() => onPageChange(p)}
-								aria-current={p === page ? "page" : undefined}
-								className={`cursor-pointer flex items-center justify-center ${sizeClass} leading-tight border border-gray-300
-                  ${p === page ? "text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700" : "text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"}`}
 							>
 								{p}
-							</button>
+							</span>
 						</li>
 					)
 				)}
 
 				{/* Next */}
-				<li>
-					<button
-						onClick={() => onPageChange(Math.min(totalPages, page + 1))}
-						disabled={page === totalPages}
-						className={`cursor-${page === totalPages ? "not-allowed" : "pointer"} flex items-center justify-center ${sizeClass} leading-tight 
-              text-gray-500 bg-white border border-gray-300 rounded-e-lg 
-              hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50`}
-					>
+				<li className={`${page === totalPages ? "disabled" : ""}`}>
+					<span className="p-2 text-white" role="button" onClick={() => onPageChange(Math.min(totalPages, page + 1))}>
 						›
-					</button>
+					</span>
 				</li>
 			</ul>
-		</nav>
+		</div>
 	);
 }

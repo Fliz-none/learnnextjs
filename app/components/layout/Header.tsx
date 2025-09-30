@@ -2,56 +2,36 @@
 
 import Logo from "@/components/ui/Logo";
 import NavLink from "@/components/layout/NavLink";
-import Container from "@/components/ui/Container";
-import { useState } from "react";
-import Image from "next/image";
 
 const NAV = [
 	{ href: "/", label: "Home" },
 	{ href: "/news", label: "News" },
-	{ href: "/shop", label: "Shop" },
 	{ href: "/about", label: "About" },
-	{ href: "/contact", label: "Contact" },
 ];
 
 export default function Header() {
-	const [open, setOpen] = useState(false);
-
 	return (
-		<header className="w-full bg-white border-b">
-			<Container className="flex items-center justify-between py-4">
-				<Logo />
-				<nav className="hidden md:flex gap-6">
-					{NAV.map((item) => (
-						<NavLink key={item.href} href={item.href}>
-							{item.label}
-						</NavLink>
-					))}
-					<NavLink href="/login">
-						<Image src="/favicon.ico" alt="Login" width={18} height={18} className="inline-block mr-1" />
-						Login
-					</NavLink>
-				</nav>
-				<button onClick={() => setOpen((s) => !s)} className="md:hidden px-3 py-2 rounded border border-gray-300">
-					☰
-				</button>
-			</Container>
-
-			{open && (
-				<div className="md:hidden border-t bg-white">
-					<Container className="py-3 flex flex-col gap-2">
-						{NAV.map((item) => (
-							<NavLink key={item.href} href={item.href}>
-								{item.label}
-							</NavLink>
-						))}
-						<NavLink href="/login">
-							<Image src="/favicon.ico" alt="Login" width={18} height={18} className="inline-block mr-1" />
-							Login
-						</NavLink>
-					</Container>
+		<header className="sticky-top py-1">
+			<nav className="navbar navbar-expand-md">
+				<div className="container">
+					<Logo />
+					<button className="navbar-toggler bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+						<span className="navbar-toggler-icon"></span>
+					</button>
+					<div className="collapse navbar-collapse" id="navbarNav">
+						<ul className="navbar-nav ms-auto gap-3 d-flex align-items-center">
+							{NAV.map((item) => (
+								<li className="nav-item" key={item.href}>
+									<NavLink href={item.href}>{item.label}</NavLink>
+								</li>
+							))}
+							<li className="nav-item">
+								<NavLink href="/login">Sign in</NavLink>
+							</li>
+						</ul>
+					</div>
 				</div>
-			)}
+			</nav>
 		</header>
 	);
 }

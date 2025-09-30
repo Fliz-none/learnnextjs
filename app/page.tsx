@@ -1,8 +1,10 @@
 export default function HomePage() {
 	return (
-		<div className="flex flex-col items-center justify-center h-[70vh] text-center px-6">
-			<h1 className="text-4xl font-bold text-gray-900">Welcome to MySite</h1>
-			<p className="mt-4 text-gray-600 max-w-xl">This is enduser home page</p>
+		<div className="d-flex flex-column justify-content-center align-items-center text-center px-3" style={{ height: "70vh" }}>
+			<h1 className="fw-bold display-4">Welcome to MySite</h1>
+			<p className="mt-3" style={{ maxWidth: "36rem" }}>
+				This is enduser home page
+			</p>
 		</div>
 	);
 }

@@ -10,16 +10,9 @@ interface InputProps {
 
 export default function Input({ label, type = "text", value, onChange, placeholder }: InputProps) {
 	return (
-		<div>
-			<label className="text-sm font-medium block text-gray-700">{label}</label>
-			<input
-				type={type}
-				placeholder={placeholder}
-				className="w-full rounded-xl border px-3 py-2 text-gray-900 placeholder-gray-400"
-				value={value}
-				onChange={(e) => onChange(e.target.value)}
-				required
-			/>
+		<div className="mb-3">
+			<label className="form-label">{label}</label>
+			<input type={type} className="form-control" placeholder={placeholder} value={value} onChange={(e) => onChange(e.target.value)} required />
 		</div>
 	);
 }

@@ -8,7 +8,7 @@ export default function NavLink({ href, children }: { href: string; children: Re
 	const active = pathname === href || (href !== "/" && pathname.startsWith(href));
 
 	return (
-		<Link href={href} className={`px-2 py-1 transition ${active ? "text-blue-600 font-semibold" : "text-gray-700 hover:text-blue-600"}`}>
+		<Link href={href} className={`nav-link ${active ? "active fw-semibold text-primary" : ""}`}>
 			{children}
 		</Link>
 	);

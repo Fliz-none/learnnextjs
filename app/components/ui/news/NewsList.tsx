@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import SearchItem from "@/components/ui/SearchItem";
-import PaginateItem from "@/components/ui/PaginateItem";
 import Image from "next/image";
 import Link from "next/link";
+import PaginateItem from "@/components/ui/PaginateItem"; // import component đã viết
 
 type News = { userId: number; id: number; title: string; body: string };
 
@@ -31,37 +30,43 @@ export default function NewsList() {
 	const totalPages = Math.ceil(filtered.length / pageSize);
 
 	return (
-		<div className="flex flex-col h-[calc(100vh-120px)]">
+		<div className="container d-flex flex-column p-2">
 			{/* Search */}
-			<SearchItem
-				id="search-news"
-				label=""
-				value={query}
-				onChange={(val) => {
-					setQuery(val);
-					setPage(1);
-				}}
-				placeholder="Search news..."
-			/>
-
-			<div className="flex-1 overflow-y-auto mt-6">
-				<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+			<div className="input-group mb-4">
+				<span className="search-icon-wrapper input-group-text">
+					<i className="bi bi-search text-white"></i>
+				</span>
+				<input type="text" className="rounded-start-0 form-control form-control-sm " placeholder="Search articles..." value={query} onChange={(e) => { setQuery(e.target.value); setPage(1); }}
+				/>
+			</div>
+			{/* Categories */}
+			<div className="d-flex flex-wrap gap-3 mb-4">
+				<button className="btn btn-outline-primary active">All</button>
+				<button className="btn btn-outline-secondary">Technology</button>
+				<button className="btn btn-outline-secondary">Politics</button>
+				<button className="btn btn-outline-secondary">Sports</button>
+			</div>
+			{/* News grid */}
+			<div className="flex-grow-1">
+				<div className="row g-4">
 					{paginated.map((p) => (
-						<Link key={p.id} href={`/news/${p.id}`} className="bg-white border rounded-lg shadow-sm hover:shadow-md transition flex flex-col overflow-hidden">
-							<div className="relative w-full h-40">
-								<Image src="/image.svg" alt={p.title} fill className="object-cover" />
-							</div>
-							<div className="p-4 flex flex-col flex-1">
-								<p className="text-xs text-gray-500">News #{p.id}</p>
-								<h5 className="mt-1 font-semibold text-gray-900 line-clamp-2">{p.title}</h5>
-								<p className="mt-2 text-sm text-gray-600 line-clamp-3 flex-1">{p.body}</p>
-							</div>
-						</Link>
+						<div key={p.id} className="col-sm-6 col-lg-4">
+							<Link href={`/news/${p.id}`} className="card h-100 shadow-sm text-decoration-none">
+								<div className="ratio ratio-16x9">
+									<Image src="/image.svg" alt={p.title} fill className="card-img-top object-fit-cover" />
+								</div>
+								<div className="card-body d-flex flex-column bg-semidark">
+									<h4 className="card-title">{p.title}</h4>
+									<p className="card-text text-truncate text-secondary">{p.body}</p>
+								</div>
+							</Link>
+						</div>
 					))}
 				</div>
 			</div>
 
-			<div className="flex items-center justify-center mt-6">
+			{/* Pagination - dùng component tái sử dụng */}
+			<div className="mt-4 d-flex justify-content-center">
 				<PaginateItem page={page} totalPages={totalPages} onPageChange={setPage} />
 			</div>
 		</div>
